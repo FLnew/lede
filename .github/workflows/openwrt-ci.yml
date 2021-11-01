@@ -103,12 +103,10 @@ jobs:
           CONFIG_PACKAGE_kmod-nf-flow=y
           CONFIG_PACKAGE_kmod-tcp-bbr=y
           CONFIG_PACKAGE_pdnsd-alt=y
-          EOF
-          
+          EOF          
           #
           # ===============================================================
-          #
-          
+          #          
           sed -i 's/^[ \t]*//g' ./.config
           make defconfig
           
