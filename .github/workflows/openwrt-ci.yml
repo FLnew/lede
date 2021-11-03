@@ -9,10 +9,9 @@ name: OpenWrt-CI
 
 on:
   push:
-    branches:
-      - master
+    branches: [ master ]
   # schedule:
-  #   - cron: 0 20 * * *
+  #  - cron: 0 20 * * *
   # release:
   #   types: [published]
 
@@ -51,55 +50,7 @@ jobs:
           ./scripts/feeds update -a
           ./scripts/feeds install -a
       - name: Generate configuration file
-        run: |
-          rm -f ./.config*
-          touch ./.config
-          #
-          # 在 cat >> .config <<EOF 到 EOF 之间粘贴你的编译配置, 需注意缩进关系
-          # 例如:
-          cat >> .config <<EOF
-          CONFIG_TARGET_ramips=y
-          CONFIG_TARGET_ramips_rt305x=y
-          CONFIG_TARGET_ramips_rt305x_DEVICE_huawei_hg255d=y
-          # CONFIG_PACKAGE_etherwake is not set
-          # CONFIG_PACKAGE_ip-tiny is not set
-          # CONFIG_PACKAGE_ipset is not set
-          # CONFIG_PACKAGE_kmod-nf-conntrack-netlink is not set
-          CONFIG_PACKAGE_kmod-nls-base=y
-          CONFIG_PACKAGE_kmod-usb-core=y
-          CONFIG_PACKAGE_kmod-usb-printer=y
-          # CONFIG_PACKAGE_libipset is not set
-          # CONFIG_PACKAGE_libmnl is not set
-          # CONFIG_PACKAGE_libuuid is not set
-          # CONFIG_PACKAGE_luci-app-arpbind is not set
-          # CONFIG_PACKAGE_luci-app-ddns is not set
-          # CONFIG_PACKAGE_luci-app-diskman_INCLUDE_btrfs_progs is not set
-          # CONFIG_PACKAGE_luci-app-diskman_INCLUDE_lsblk is not set
-          # CONFIG_PACKAGE_luci-app-nlbwmon is not set
-          CONFIG_PACKAGE_luci-app-p910nd=y
-          # CONFIG_PACKAGE_luci-app-turboacc is not set
-          # CONFIG_PACKAGE_luci-app-unblockmusic is not set
-          # CONFIG_PACKAGE_luci-app-upnp is not set
-          # CONFIG_PACKAGE_luci-app-vlmcsd is not set
-          # CONFIG_PACKAGE_luci-app-vsftpd is not set
-          # CONFIG_PACKAGE_luci-app-wol is not set
-          CONFIG_PACKAGE_luci-i18n-p910nd-zh-cn=y
-          # CONFIG_PACKAGE_miniupnpd is not set
-          # CONFIG_PACKAGE_nlbwmon is not set
-          CONFIG_PACKAGE_p910nd=y
-          # CONFIG_PACKAGE_vlmcsd is not set
-          # CONFIG_PACKAGE_vsftpd-alt is not set
-          # CONFIG_PACKAGE_wol is not set
-          CONFIG_PACKAGE_kmod-ipt-offload=y
-          CONFIG_PACKAGE_kmod-nf-flow=y
-          CONFIG_PACKAGE_kmod-tcp-bbr=y
-          CONFIG_PACKAGE_pdnsd-alt=y
-          EOF          
-          #
-          # ===============================================================
-          #          
-          sed -i 's/^[ \t]*//g' ./.config
-          make defconfig
+        run: make defconfig
 
       - name: Make download
         run: |
